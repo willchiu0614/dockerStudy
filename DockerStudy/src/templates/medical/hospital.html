@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<form action="{%url 'hospital_form_name'%}" method="get" class="mt-2">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-warning  ml-2 pt-0 pb-0"> 新增資料</button>
+</form>
+{% for item in hospital_list %}
+<div class="mt-2 p-2  w-50" style="background-color: rgb(241, 241, 241);border:solid 2px; border-radius: 10px;">
+  <h1> 名稱 : {{item.name }} </h1>
+  <ul>
+    <li>地址 : {{ item.address }}</li>
+    <li>創立日 : {{ item.established_date }}</li>
+    <li>容納人數 : {{ item.capacity }}</li>
+    <!-- <li><a href="./{{item.id}}/">部門資訊</a></li> -->
+    <li><a href="{%url 'department_name' item.id%}">部門資訊</a></li>
+    <li class="row">
+      <form action="{%url 'hospital_delete_name' hospital_id=item.id %}" method="POST" class="m-0 p-0 ">
+        {% csrf_token %}
+        <div class="form-group m-0">
+          <button type="submit" class="btn btn-danger  pt-0 pb-0"> 刪除</button>
+        </div>
+      </form>
+      <form action="{%url 'hospital_edit_name' hospital_id=item.id status=1%}" method="get" class="m-0 p-0 ml-2">
+        {% csrf_token %}
+        <div class="form-group m-0">
+          <button type="submit" class="btn btn-warning  pt-0 pb-0"> 修改</button>
+        </div>
+      </form>
+    </li>
+  </ul>
+</div>
+{% endfor %}
+{% endblock %}

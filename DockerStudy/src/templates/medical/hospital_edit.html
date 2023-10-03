@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{%block title%}{%endblock%}
+{%block content%}
+<h1>創建醫院資料</h1>
+{% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
+
+<form action="{%url 'hospital_edit_name' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="hidden" name="hospital_id" value="{{hospital.id}}">
+        <div class="input-group mb-2 p-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text">院名:{{hospital.name}}</span>
+            </div>
+
+        </div>
+        <div class="input-group mb-2 p-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text">地址</span>
+            </div>
+            <input type="text" name="address_name" class="form-control col-3  " value="{{hospital.address}}">
+        </div>
+        <div class="input-group mb-2 p-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text">創建日</span>
+            </div>
+            <input type="date" name="established_date" class="form-control col-3 " value="{{date}}">
+        </div>
+
+        <div class="input-group mb-2 p-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text">可容納人數</span>
+            </div>
+            <input type="number" name="capacity_name" class="form-control col-3 " value="{{hospital.capacity}}">
+        </div>
+        {% for item in department_list %}
+        <div class="mt-2 p-2  w-25" style="background-color: rgb(241, 241, 241);border:solid 2px; border-radius: 10px;">
+            <div class="input-group mb-2 p-0">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">部門名稱{{item.id}}</span>
+                </div>
+                <input type="text" name="department_name_{{item.id}}" class="form-control col-3 " value="{{item.name}}">
+            </div>
+            <div class="input-group mb-2 p-0">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">樓層</span>
+                </div>
+                <input type="number" name="floor_name_{{item.id}}" class="form-control col-3 " value="{{item.floor}}">
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary  ml-2 pt-0 pb-0"> 儲存</button>
+    </div>
+
+</form>
+{%endblock%}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} {% endblock %}
+{% block content %}
+<form action="{%url 'hospital' %}" method="get" class="mt-2">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary  ml-2 pt-0 pb-0"> 回到首頁</button>
+</form>
+<form action="{%url 'department_create_name' param=hospital_name status=2%}" method="get" class="mt-2">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning  ml-2 pt-0 pb-0"> 新增資料</button>
+</form>
+{% for item in department_list %}
+<div class="mt-2 p-2  w-25" style="background-color: rgb(241, 241, 241);border:solid 2px; border-radius: 10px;">
+    <h1> 名稱 : {{item.name }} </h1>
+
+    <ul>
+        <li>樓層 : {{ item.floor }}</li>
+        <li>
+            <form action="{%url 'department_delete_name' department_id=item.id status=1%}" method="POST"
+                class="m-0 p-0 ">
+                {% csrf_token %}
+                <div class="form-group m-0">
+                    <button type="submit" class="btn btn-danger  "> 刪除</button>
+                </div>
+            </form>
+        </li>
+    </ul>
+</div>
+{% endfor %}
+{% endblock %}
